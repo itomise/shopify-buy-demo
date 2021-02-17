@@ -35,7 +35,7 @@ const DetailPage: NextPage<DetailProps> = ({
         .addLineItems(checkout.id, [{ variantId: variantsId, quantity: 1 }])
         .then((checkout) => {
           console.log(checkout.lineItems)
-          setCheckoutLink(checkout.webUrl)
+          // setCheckoutLink(checkout.webUrl)
         })
     })
   }, [])

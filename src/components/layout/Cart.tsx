@@ -16,6 +16,8 @@ const Cart: React.FC = () => {
         .then((checkout) => {
           console.log(checkout.lineItems)
           // console.log(checkout.webUrl)
+          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+          // @ts-ignore-block
           window.open(checkout.webUrl, '_blank')
         })
     })
