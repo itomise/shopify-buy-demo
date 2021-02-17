@@ -1,0 +1,19 @@
+@import '~src/styles/default/components.scss';
+
+.wrap {
+  display: flex;
+  margin: 30px 0 0;
+  align-items: center;
+  background-color: #eee;
+  img {
+    width: 200px;
+    height: auto;
+  }
+  div {
+    padding: 0 17px;
+  }
+  button {
+    border: 1px solid #888;
+    padding: 7px;
+  }
+}
