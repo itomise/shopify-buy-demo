@@ -1,5 +1,5 @@
 import { Product } from 'shopify-buy'
-import { GetStaticProps, NextPage } from 'next'
+import { GetServerSideProps, GetStaticProps, NextPage } from 'next'
 import Link from 'next/link'
 import { getShopifyClient } from '~/utils/getShopifyClient'
 import { SetCheckoutId } from '~/components/layout/SetCheckoutId'
@@ -31,7 +31,7 @@ const IndexPage: NextPage<IndexProps> = ({
 
 export default IndexPage
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const client = getShopifyClient(
     process.env.SHOPIFY_DOMAIN,
     process.env.STORE_FRONT_ACCESS_TOKEN,
