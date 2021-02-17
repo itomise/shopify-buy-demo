@@ -8,6 +8,4 @@ v12.18.4
 yarn
 
 yarn dev
-
-yarn export
 ```
