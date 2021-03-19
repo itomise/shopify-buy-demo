@@ -1,7 +1,6 @@
 import { Product } from 'shopify-buy'
 import Link from 'next/link'
 import style from '~/styles/components/index/ProductCard.module.scss'
-import { getShopifyClient } from '~/utils/getShopifyClient'
 import { useContext } from 'react'
 import { AppContext } from '~/store/appContext'
 
@@ -32,12 +31,11 @@ const ProductCard: React.FC<Props> = ({ product }) => {
       <button type="button" onClick={handleClick}>
         カートに入れる
       </button>
-      {/* <Link href="/[id]" as={`/${product.id}`}>
+      <Link href="/[id]" as={`/${product.id}`}>
         <a>
-          {product.title}
-          <img src={product.images[0].src} height={80} />
+          <span>商品詳細へ</span>
         </a>
-      </Link> */}
+      </Link>
     </li>
   )
 }

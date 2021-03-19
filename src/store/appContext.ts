@@ -21,6 +21,7 @@ type Action =
   | { type: 'SET_SHOPIFY_TOKEN'; domain: string; token: string }
   | { type: 'UPDATE_CHECKOUT'; value: boolean }
   | { type: 'ADD_LINE_ITEM'; value: LineItemToAdd }
+  | { type: 'RESET_LINE_ITEM' }
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -44,6 +45,11 @@ const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         lineItemTmp: state.lineItemTmp.concat(action.value),
+      }
+    case 'RESET_LINE_ITEM':
+      return {
+        ...state,
+        lineItemTmp: [],
       }
     default:
       return state

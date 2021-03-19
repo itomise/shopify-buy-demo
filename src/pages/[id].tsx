@@ -1,25 +1,17 @@
 import { GetStaticProps, GetStaticPaths, NextPage } from 'next'
 import { Product } from 'shopify-buy'
-import React, { useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import Link from 'next/link'
 import { getShopifyClient } from '~/utils/getShopifyClient'
-import { SetCheckoutId } from '~/components/layout/SetCheckoutId'
+import Head from 'next/head'
+import { AppContext } from '~/store/appContext'
 
 type DetailProps = {
   product?: Product
   errors?: string
-  shopifyDomain?: string
-  shopifyAccessToken?: string
 }
 
-const DetailPage: NextPage<DetailProps> = ({
-  product,
-  errors,
-  shopifyDomain,
-  shopifyAccessToken,
-}) => {
-  const [checkoutLink, setCheckoutLink] = useState('')
-
+const DetailPage: NextPage<DetailProps> = ({ product, errors }) => {
   if (errors) {
     return <p>Error: {errors}</p>
   }
@@ -27,30 +19,34 @@ const DetailPage: NextPage<DetailProps> = ({
     return <p>Error: Product not found</p>
   }
 
-  useEffect(() => {
-    const client = getShopifyClient(shopifyDomain, shopifyAccessToken)
-    client.checkout.create().then((checkout: any) => {
-      const variantsId = product.variants[0].id
-      client.checkout
-        .addLineItems(checkout.id, [{ variantId: variantsId, quantity: 1 }])
-        .then((checkout) => {
-          console.log(checkout.lineItems)
-          // setCheckoutLink(checkout.webUrl)
-        })
+  const { appState, appDispatch } = useContext(AppContext)
+
+  const handleClick = (): void => {
+    console.log(product.variants[0].id)
+    appDispatch({
+      type: 'ADD_LINE_ITEM',
+      value: { variantId: product.variants[0].id, quantity: 1 },
     })
-  }, [])
+    setTimeout(() => {
+      console.log(appState.lineItemTmp)
+    }, 1000)
+  }
 
   return (
     <>
-      <SetCheckoutId domain={shopifyDomain} token={shopifyAccessToken} />
-
+      <Head>
+        <title>{product.title}</title>
+      </Head>
       <div>
         <p>{product.title}</p>
         <img src={product.images[0].src} height={200} />
       </div>
-      <Link href={checkoutLink}>
-        <a target="_blank">
-          <button>購入する</button>
+      <button type="button" onClick={handleClick}>
+        カートに入れる
+      </button>
+      <Link href="/">
+        <a>
+          <button>トップへ</button>
         </a>
       </Link>
     </>
@@ -89,8 +85,6 @@ export const getStaticProps: GetStaticProps<DetailProps> = async ({
     return {
       props: {
         product: product,
-        shopifyDomain: process.env.SHOPIFY_DOMAIN,
-        shopifyAccessToken: process.env.STORE_FRONT_ACCESS_TOKEN,
       },
     }
   } catch (err) {

@@ -1,24 +1,19 @@
 import { Product } from 'shopify-buy'
-import { GetServerSideProps, GetStaticProps, NextPage } from 'next'
-import Link from 'next/link'
+import { GetStaticProps, NextPage } from 'next'
 import { getShopifyClient } from '~/utils/getShopifyClient'
-import { SetCheckoutId } from '~/components/layout/SetCheckoutId'
 import { ProductCard } from '~/components/index/ProductCard'
+import Head from 'next/head'
 
 type IndexProps = {
   products: Product[]
-  shopifyDomain?: string
-  shopifyAccessToken?: string
 }
 
-const IndexPage: NextPage<IndexProps> = ({
-  products,
-  shopifyDomain,
-  shopifyAccessToken,
-}) => {
+const IndexPage: NextPage<IndexProps> = ({ products }) => {
   return (
     <>
-      <SetCheckoutId domain={shopifyDomain} token={shopifyAccessToken} />
+      <Head>
+        <title>Shopify-buy Demo</title>
+      </Head>
       <h1>Shopify-buy Demo</h1>
       <ul>
         {products.map((product) => (
@@ -31,7 +26,7 @@ const IndexPage: NextPage<IndexProps> = ({
 
 export default IndexPage
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const client = getShopifyClient(
     process.env.SHOPIFY_DOMAIN,
     process.env.STORE_FRONT_ACCESS_TOKEN,
@@ -42,8 +37,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       products: JSON.parse(JSON.stringify(products)),
-      shopifyDomain: process.env.SHOPIFY_DOMAIN,
-      shopifyAccessToken: process.env.STORE_FRONT_ACCESS_TOKEN,
     },
   }
 }
