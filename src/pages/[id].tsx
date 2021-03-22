@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { getShopifyClient } from '~/utils/getShopifyClient'
 import Head from 'next/head'
 import { AppContext } from '~/store/appContext'
+import style from '~/styles/components/detail/detail.module.scss'
 
 type DetailProps = {
   product?: Product
@@ -37,18 +38,22 @@ const DetailPage: NextPage<DetailProps> = ({ product, errors }) => {
       <Head>
         <title>{product.title}</title>
       </Head>
-      <div>
-        <p>{product.title}</p>
+      <div className={style.img}>
         <img src={product.images[0].src} height={200} />
       </div>
-      <button type="button" onClick={handleClick}>
-        カートに入れる
-      </button>
-      <Link href="/">
-        <a>
-          <button>トップへ</button>
-        </a>
-      </Link>
+      <div className={style.title}>{product.title}</div>
+      <div className={style.button}>
+        <button type="button" onClick={handleClick}>
+          カートに入れる
+        </button>
+      </div>
+      <div className={style.top}>
+        <Link href="/">
+          <a>
+            <button>トップへ</button>
+          </a>
+        </Link>
+      </div>
     </>
   )
 }

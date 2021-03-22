@@ -24,18 +24,22 @@ const ProductCard: React.FC<Props> = ({ product }) => {
 
   return (
     <li className={style.wrap}>
-      <h2>{product.title}</h2>
-      <div>
+      <div className={style.img}>
         <img src={product.images[0].src} />
       </div>
-      <button type="button" onClick={handleClick}>
-        カートに入れる
-      </button>
-      <Link href="/[id]" as={`/${product.id}`}>
-        <a>
-          <span>商品詳細へ</span>
-        </a>
-      </Link>
+      <div className={style.detail}>
+        <h2 className={style.title}>{product.title}</h2>
+        <button type="button" onClick={handleClick}>
+          カートに入れる
+        </button>
+        <div className={style.link}>
+          <Link href="/[id]" as={`/${product.id}`}>
+            <a>
+              <span>商品詳細へ</span>
+            </a>
+          </Link>
+        </div>
+      </div>
     </li>
   )
 }

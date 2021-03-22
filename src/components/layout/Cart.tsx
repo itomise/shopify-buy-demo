@@ -41,15 +41,21 @@ const Cart: React.FC = () => {
       <>
         <p>カートに入っている数 : {appState.lineItemTmp.length}</p>
         {webUrl && (
-          <Link href={webUrl}>
-            <a target="_blank">
-              <button type="submit" onClick={handleClick}>
-                支払いに進む
-              </button>
-            </a>
-          </Link>
+          <div className={style.button}>
+            <Link href={webUrl}>
+              <a target="_blank">
+                <button type="submit" onClick={handleClick}>
+                  支払いに進む
+                </button>
+              </a>
+            </Link>
+          </div>
         )}
-        {loading && <span>Loading ...</span>}
+        {loading && (
+          <div className={style.button}>
+            <span>支払いURL取得中...</span>
+          </div>
+        )}
       </>
     </div>
   )

@@ -15,7 +15,14 @@ const IndexPage: NextPage<IndexProps> = ({ products }) => {
         <title>Shopify-buy Demo</title>
       </Head>
       <h1>Shopify-buy Demo</h1>
-      <ul>
+      <ul
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridGap: '20px',
+          paddingTop: '30px',
+        }}
+      >
         {products.map((product) => (
           <ProductCard product={product} key={product.id} />
         ))}
